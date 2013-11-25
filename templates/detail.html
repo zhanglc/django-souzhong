@@ -1,0 +1,44 @@
+{% extends "result.html" %}
+{% block title %}{{ magnet.name }}{% endblock %}
+{% block description %}提供{{ q }}相关电影 BT,{{ q }}种子,{{ q }}磁链,{{ q }} 下载，有avi，rmvb，720p等多种格式{% endblock %}
+{% block keywords %}{{ magnet.name }},BT,迅雷,下载{% for term in magnet.term.all %}{{ term.name }},{% endfor %}{% endblock %}
+{% block nav %}<li class="active">{{ magnet.name }}</li>{% endblock %}
+{% block content %}
+    <style>
+    .thunder_download_link {
+        padding: 16px 24px;
+        font-size: 90%;
+        color: #468847;
+        background-color: #dff0d8;
+        border-radius: 4px;
+        border-color: #d6e9c6;
+        word-wrap: break-word;
+        word-break: break-all;
+        font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    }
+
+
+    </style>
+    <div class="row">
+        <h1>{{ magnet.name }}</h1>
+        <hr/>
+        <p class="text-primary">
+            迅雷下载链接：
+            <br/><br/>
+            <div class="thunder_download_link">{{ magnet.link }}</div>
+        </p>
+    </div>
+    <div class="row">
+    {% load more_like_this  %}
+    {% more_like_this magnet as related_magnet limit 10 %}
+    <h2>{{ magnet.name }}相关电影</h2>
+    <hr/>
+    <ol >
+    {% for m in related_magnet %}
+        <li><a href="{{ m.object.get_absolute_url }}"><h3>{{ m.object.name }}</h3></a></li>
+    {% empty %}
+        <li>暂无</li>
+    {% endfor %}
+    </ol>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load staticfiles highlight%}
+{% block link_css %}
+    <link href="{% static 'css/index.css' %}" rel="stylesheet" media="screen">
+{% endblock  %}
+{% block main %}
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="item active masthead">
+            <div class="masthead-bg"></div>
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>搜种</h1>
+
+                    <h2>BT，迅雷，电驴，磁链</h2>
+
+                    <p>
+
+                        <form class="form-horizontal" role="form" method="get">
+                            <table style="border: 0;padding: 0;margin: 0;width: 100%">
+                                <tr>
+                                    <td><input type="text" class="form-control" placeholder="请输入您要搜索的关键词" name="q"/></td>
+                                    <td style="width: 10%">
+                                        <button type="submit" class="btn btn-primary ">search</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.carousel -->
+<div class="container projects">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>热搜：</h3>
+            <hr/>
+            <ul class="list-inline">
+                {% for keyword in hot_keyword %}
+                <li><a href="/?q={{ keyword }}"><h3>{{ keyword }}</h3></a></li>
+                {% empty %}
+                    <li>暂无热词</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>最新：</h3>
+            <hr/>
+            <ul class="list-unstyled">
+                {% for r in recent %}
+                <li><a href="{{ r.get_absolute_url }}"><h3>{{ r.name }}</h3></a></li>
+                {% empty %}
+                    <li>无更新</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
